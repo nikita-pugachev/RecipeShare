@@ -9,7 +9,6 @@
   width: 100%;
   height: 570px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-  box-sizing: border-box;
 }
 
 .cardHeader {
@@ -22,7 +21,7 @@
 
 .authorName {
   font-family: var(--title-font-family);
-  font-size: 16px;
+  font-size: var(--main-font-size);
   color: var(--main-color);
   font-weight: 500;
 }
@@ -31,10 +30,8 @@
   font-family: var(--title-font-family);
   font-size: 20px;
   color: var(--main-color);
-  margin: 0;
   font-weight: 600;
   line-height: 1.2;
-  height: 24px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -63,7 +60,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 4px;
+  margin-block-start: 4px;
   height: 32px;
   width: 100%;
   overflow: hidden;
@@ -75,7 +72,7 @@
   align-items: center;
   justify-content: center;
   height: 32px;
-  padding: 0 12px;
+  padding-inline: 12px;
   border-radius: 20px;
   background-color: var(--background-button-secondary);
   border: 1px solid var(--border-main);
@@ -85,7 +82,6 @@
   user-select: none;
   white-space: nowrap;
   flex-shrink: 0;
-  box-sizing: border-box;
 }
 
 .description {
@@ -94,7 +90,6 @@
   line-height: 1.5;
   color: var(--main-color);
   opacity: 0.8;
-  margin: 0;
   height: 63px;
   overflow: hidden;
   flex-shrink: 0;
@@ -110,7 +105,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto;
+  margin-block-start: auto;
   height: 52px;
   flex-shrink: 0;
 }
@@ -127,7 +122,6 @@
   font-family: var(--title-font-family);
   font-size: 14px;
   color: var(--main-color);
-  box-sizing: border-box;
 }
 
 .likeIcon {
@@ -156,7 +150,7 @@
   margin-left: auto;
   background: transparent;
   border: none;
-  color: #e53e3e;
+  color: var(--error-color);
   font-family: var(--main-font-family);
   font-size: 13px;
   font-weight: 500;

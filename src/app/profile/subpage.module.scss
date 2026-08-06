@@ -2,7 +2,7 @@
   font-family: var(--title-font-family);
   font-size: var(--h2-font-size);
   color: var(--main-color);
-  margin-bottom: 24px;
+  margin-block-end: 24px;
 }
 
 .description {
@@ -16,7 +16,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
   width: 100%;
-  margin-top: 24px;
+  margin-block-start: 24px;
   box-sizing: border-box;
 
   @media (max-width: 1200px) {
@@ -46,14 +46,12 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  box-sizing: border-box;
 }
 
 .confirmTitle {
   font-family: var(--title-font-family);
   font-size: 20px;
   color: var(--main-color);
-  margin: 0;
   font-weight: 600;
 }
 
@@ -63,14 +61,13 @@
   color: var(--main-color);
   opacity: 0.8;
   line-height: 1.5;
-  margin: 0;
 }
 
 .confirmButtons {
   display: flex;
   gap: 12px;
   width: 100%;
-  margin-top: 8px;
+  margin-block-start: 8px;
   
   & > button {
     flex: 1;

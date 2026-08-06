@@ -3,7 +3,6 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 24px;
   width: 100%;
-  box-sizing: border-box;
 
   @media (max-width: 1600px) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -25,11 +24,10 @@
 .loader,
 .empty {
   font-family: var(--main-font-family);
-  font-size: 16px;
+  font-size: var(--main-font-size);
   color: var(--main-color);
   opacity: 0.7;
   text-align: center;
   padding: 80px 20px;
   width: 100%;
-  box-sizing: border-box;
 }

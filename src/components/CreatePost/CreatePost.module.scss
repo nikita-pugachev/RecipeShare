@@ -18,14 +18,13 @@
   font-family: var(--title-font-family);
   font-size: var(--main-font-size);
   color: var(--main-color);
-  margin: 0;
   font-weight: 500;
 }
 
 .buttonGroup {
   display: flex;
   gap: 12px;
-  margin-top: 12px;
+  margin-block-inline: 12px;
   width: 100%;
 }
 

@@ -7,7 +7,7 @@
   font-family: var(--title-font-family);
   font-size: var(--h2-font-size);
   color: var(--main-color);
-  margin-bottom: 24px;
+  margin-block-end: 24px;
 }
 
 .form {
@@ -26,7 +26,7 @@
   color: var(--main-color);
   font-family: var(--main-font-family);
   font-size: var(--support-font-size);
-  padding-left: 4px;
+  padding-inline-start: 4px;
 }
 
 .changePasswordToggle {
@@ -36,9 +36,7 @@
   font-family: var(--title-font-family);
   font-size: var(--main-font-size);
   cursor: pointer;
-  padding: 0;
-  text-align: left;
-  margin-top: 8px;
+  margin-block-start: 8px;
   text-decoration: underline;
   width: fit-content;
   transition: opacity 0.2s ease;
@@ -62,8 +60,6 @@
   font-family: var(--main-font-family);
   font-size: var(--support-font-size);
   cursor: pointer;
-  padding: 0;
-  text-align: left;
   text-decoration: underline;
   width: fit-content;
   transition: opacity 0.2s ease;
@@ -79,9 +75,9 @@
 }
 
 .successAlert {
-  color: #137333;
+  color: var(--success-color);
 }
 
 .errorAlert {
-  color: #c5221f;
+  color: var(--error-color);
 }
