@@ -1,5 +1,5 @@
 "use client";
-import styles from './Search.module.scss';
+import styles from "./Search.module.scss";
 import { Input } from "@/components/ui/Input/Input";
 import { FC, useState } from "react";
 import Image from "next/image";
@@ -40,9 +40,11 @@ export const Search: FC<SearchProps> = ({ value, placeholder, onChange }) => {
       onClick={handleClear}
       className={styles.searchInput}
       icon={
-        currentValue && <Image className={styles.icon} src={closeIcon} alt='close' />
+        currentValue && (
+          <Image className={styles.icon} src={closeIcon} alt="close" />
+        )
       }
-      categoryIcon={<Image src={searchIcon} alt='search' />}
+      categoryIcon={<Image src={searchIcon} alt="search" />}
     />
   );
 };

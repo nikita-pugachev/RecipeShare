@@ -7,10 +7,7 @@ let clientSingleton: ReturnType<typeof createBrowserClient> | null = null;
 
 export const createClient = () => {
   if (!clientSingleton) {
-    clientSingleton = createBrowserClient(
-      supabaseUrl!,
-      supabaseKey!,
-    );
+    clientSingleton = createBrowserClient(supabaseUrl!, supabaseKey!);
   }
   return clientSingleton;
 };

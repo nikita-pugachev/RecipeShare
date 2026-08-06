@@ -10,7 +10,6 @@
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
@@ -35,22 +34,19 @@
   border: 1px solid var(--background-button-main);
   cursor: pointer;
   user-select: none;
-  width: 280px; // Фиксированная ширина кнопки
-  box-sizing: border-box;
+  width: 280px;
 }
 
-// Стили деталей выбранного файла
 .fileDetails {
   display: inline-flex;
   align-items: center;
-  justify-content: space-between; // Разносит имя файла влево, а крестик вправо
+  justify-content: space-between;
   gap: 12px;
-  padding: 16px 24px; // Падинги равны кнопке для сохранения постоянной высоты
+  padding: 16px 24px;
   background-color: var(--background-button-secondary);
   border: 1px solid var(--border-main);
   border-radius: 12px;
-  width: 280px; // Фиксированная ширина совпадает с кнопкой
-  box-sizing: border-box;
+  width: 280px;
 }
 
 .fileName {
@@ -60,8 +56,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 180px; // Лимитируем ширину имени файла для предотвращения растягивания
-  flex: 1; // Заполняет оставшееся пространство
+  max-width: 180px;
+  flex: 1;
 }
 
 .clearButton {

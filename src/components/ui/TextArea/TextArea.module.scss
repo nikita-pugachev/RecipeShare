@@ -1,24 +1,24 @@
 .textarea {
-    width: 100%;
-    min-height: 100px;
-    padding: 12px 24px;
-    border: 1px solid var(--border-main);
-    border-radius: 8px;
-    font-family: var(--main-font-family);
-    color: var(--main-color);
-    font-size: var(--main-font-size);
-    resize: none;
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 24px;
+  border: 1px solid var(--border-main);
+  border-radius: 8px;
+  font-family: var(--main-font-family);
+  color: var(--main-color);
+  font-size: var(--main-font-size);
+  resize: none;
 }
 
 .textarea:focus {
-    outline: none;
-    border: 1px solid var(--border-access);
+  outline: none;
+  border: 1px solid var(--border-access);
 }
 
 .label {
-    color: var(--main-color);
-    font-family: var(--main-font-family);
-    font-size: var(--support-font-size);
-    background-color: transparent;
-    padding-left: 4px;
+  color: var(--main-color);
+  font-family: var(--main-font-family);
+  font-size: var(--support-font-size);
+  background-color: transparent;
+  padding-left: 4px;
 }

@@ -1,71 +1,71 @@
 .inputWrapper {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-    width: 100%;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  width: 100%;
 }
 
 .inputContainer {
-    position: relative;
-    display: flex;
-    border: none;
-    width: 100%;
-    padding: 0;
-    background-color: transparent;
+  position: relative;
+  display: flex;
+  border: none;
+  width: 100%;
+  padding: 0;
+  background-color: transparent;
 }
 
 .label {
-    color: var(--main-color);
-    font-family: var(--main-font-family);
-    font-size: var(--support-font-size);
-    background-color: transparent;
-    padding-left: 4px;
+  color: var(--main-color);
+  font-family: var(--main-font-family);
+  font-size: var(--support-font-size);
+  background-color: transparent;
+  padding-inline-start: 4px;
 }
 
 .input {
-    width: 100%;
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: 1px solid var(--border-main);
-    font-family: var(--main-font-family);
-    color: var(--main-color);
-    font-size: var(--main-font-size);
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border-main);
+  font-family: var(--main-font-family);
+  color: var(--main-color);
+  font-size: var(--main-font-size);
 }
 
 input:focus {
-    outline: none;
-    border: 1px solid var(--border-access);
+  outline: none;
+  border: 1px solid var(--border-access);
 }
 
 .error {
-    color: var(--error-color);
-    font-family: var(--alt-font-family);
-    font-size: var(--support-font-size);
+  color: var(--error-color);
+  font-family: var(--alt-font-family);
+  font-size: var(--support-font-size);
 }
 
 .hint {
-    color: var(--main-color);
-    font-family: var(--alt-font-family);
-    font-size: var(--support-font-size);
+  color: var(--main-color);
+  font-family: var(--alt-font-family);
+  font-size: var(--support-font-size);
 }
 
 .categoryIcon {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    left: 12px;
-    top: 12px;
-    border: none;
-    background: transparent;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 12px;
+  top: 12px;
+  border: none;
+  background: transparent;
 }
 
 .iconContainer {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    right: 12px;
-    top: 12px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 12px;
+  top: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }

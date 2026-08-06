@@ -6,7 +6,7 @@ import defaultUserIcon from "@/assets/icons/user-icon.svg";
 interface AvatarProps {
   src?: string | null;
   alt?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   className?: string;
 }
 
