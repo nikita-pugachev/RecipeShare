@@ -24,7 +24,7 @@
 .buttonGroup {
   display: flex;
   gap: 12px;
-  margin-block-inline: 12px;
+  margin-block-start: 12px;
   width: 100%;
 }
 
@@ -57,7 +57,6 @@
 .removeBadgeButton {
   background: none;
   border: none;
-  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -114,10 +113,10 @@
 
 .successAlert {
   background-color: #e6f4ea;
-  color: #137333;
+  color: var(--success-color);
 }
 
 .errorAlert {
   background-color: #fce8e6;
-  color: #c5221f;
+  color: var(--error-color);
 }

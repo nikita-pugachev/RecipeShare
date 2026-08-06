@@ -1,195 +1,196 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 36px;
-    background-color: var(--background-alt);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 36px;
+  background-color: var(--background-alt);
 }
 
 .searchContainer {
-    width: 360px;
+  width: 360px;
 }
 
 .buttonContainer {
-    display: flex;
-    gap: 8px;
-    background-color: transparent;
+  display: flex;
+  gap: 8px;
+  background-color: transparent;
 }
 
 .profileContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .profileWrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding-bottom: 12px;
-    margin-bottom: -12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: -12px;
 }
 
 .userBadge {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 4px 16px 4px 4px;
-    background-color: transparent;
-    border: 1px solid var(--border-main);
-    border-radius: 9999px;
-    text-decoration: none;
-    color: var(--main-color);
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 16px 4px 4px;
+  background-color: transparent;
+  border: 1px solid var(--border-main);
+  border-radius: 9999px;
+  text-decoration: none;
+  color: var(--main-color);
+  cursor: pointer;
 
-    &:hover {
-        text-decoration: none;
-        border: 1px solid var(--background-button-main);
-    }
+  &:hover {
+    text-decoration: none;
+    border: 1px solid var(--background-button-main);
+  }
 }
 
 .username {
-    font-family: var(--title-font-family);
-    font-size: 16px;
-    font-weight: 500;
+  font-family: var(--title-font-family);
+  font-size: var(--main-font-family);
+  font-weight: 500;
 }
 
 .dropdownMenu {
-    display: flex;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 10px;
-    background-color: var(--background-alt);
-    border: 1px solid var(--border-main);
-    border-radius: 12px;
-    padding: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    flex-direction: column;
-    gap: 4px;
-    min-width: 200px;
-    z-index: 100;
+  display: flex;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-block-start: 10px;
+  background-color: var(--background-alt);
+  border: 1px solid var(--border-main);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  flex-direction: column;
+  gap: 4px;
+  min-width: 200px;
+  z-index: 100;
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: -14px;
-        left: 0;
-        right: 0;
-        height: 14px;
-        background: transparent;
-    }
+  &::before {
+    content: "";
+    position: absolute;
+    top: -14px;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background: transparent;
+  }
 }
 
 .dropdownItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    padding: 10px 12px;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    color: var(--main-color);
-    font-family: var(--main-font-family);
-    font-size: 14px;
-    cursor: pointer;
-    text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--main-color);
+  font-family: var(--main-font-family);
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+
+  &:hover {
     text-decoration: none;
-    box-sizing: border-box;
 
-    &:hover {
-        text-decoration: none;
-
-        .plusIcon {
-            filter: invert(66%) sepia(61%) saturate(541%) hue-rotate(65deg) brightness(90%) contrast(87%);
-        }
+    .plusIcon {
+      filter: invert(66%) sepia(61%) saturate(541%) hue-rotate(65deg)
+        brightness(90%) contrast(87%);
     }
+  }
 }
 
 .plusIcon {
-    transition: filter 0.2s ease;
+  transition: filter 0.2s ease;
 }
 
 .logoutItem {
+  color: var(--main-color);
+  justify-content: space-between;
+
+  &:hover {
     color: var(--main-color);
-    justify-content: space-between;
 
-    &:hover {
-        color: var(--main-color);
-
-        .logoutIcon {
-            filter: invert(24%) sepia(91%) saturate(6926%) hue-rotate(352deg) brightness(97%) contrast(106%);
-        }
+    .logoutIcon {
+      filter: invert(24%) sepia(91%) saturate(6926%) hue-rotate(352deg)
+        brightness(97%) contrast(106%);
     }
+  }
 }
 
 .logoutIcon {
-    transition: filter 0.2s ease;
+  transition: filter 0.2s ease;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--main-color);
-    transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--main-color);
+  transition: opacity 0.2s ease;
 
-    &:hover {
-        text-decoration: none;
-        opacity: 0.9;
-    }
+  &:hover {
+    text-decoration: none;
+    opacity: 0.9;
+  }
 }
 
 .logoImage {
-    border-radius: 8px;
-    object-fit: cover;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .logoText {
-    font-family: var(--title-font-family);
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--main-color);
+  font-family: var(--title-font-family);
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--main-color);
 }
 
 @media (max-width: 768px) {
-    .header {
-        padding: 16px 20px;
-        gap: 16px;
-        flex-wrap: wrap;
-    }
+  .header {
+    padding: 16px 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
 
-    .searchContainer {
-        width: 100%;
-        order: 3;
-    }
+  .searchContainer {
+    width: 100%;
+    order: 3;
+  }
 
-    .username {
-        display: none;
-    }
+  .username {
+    display: none;
+  }
 
-    .userBadge {
-        padding: 4px;
-    }
+  .userBadge {
+    padding: 4px;
+  }
 
-    .dropdownMenu {
-        right: 0;
-        top: calc(100% + 4px);
-    }
+  .dropdownMenu {
+    right: 0;
+    top: calc(100% + 4px);
+  }
 
-    .buttonContainer {
-        width: 100%;
-        order: 2; // Размещаем кнопки на второй строке (под логотипом)
-        gap: 8px;
-        
-        & > button {
-            flex: 1; // Растягиваем кнопки поровну 50%/50%
-            justify-content: center;
-            font-size: 13px; // Чуть меньший шрифт для мобильных, чтобы длинные слова влезали
-            white-space: nowrap;
-            padding: 10px 12px; // Компактные паддинги
-        }
+  .buttonContainer {
+    width: 100%;
+    order: 2;
+    gap: 8px;
+
+    & > button {
+      flex: 1;
+      justify-content: center;
+      font-size: var(--support-font-size);
+      white-space: nowrap;
+      padding: 10px 12px;
     }
+  }
 }

@@ -6,8 +6,7 @@
   max-width: 600px;
   max-height: 80vh;
   overflow-y: auto;
-  padding-right: 8px;
-  box-sizing: border-box;
+  padding-inline-end: 8px;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -34,23 +33,22 @@
 
 .authorName {
   font-family: var(--title-font-family);
-  font-size: 16px;
+  font-size: var(--main-font-size);
   color: var(--main-color);
   font-weight: 600;
 }
 
 .subtext {
   font-family: var(--main-font-family);
-  font-size: 12px;
+  font-size: var(--support-font-size);
   color: var(--main-color);
   opacity: 0.5;
 }
 
 .title {
   font-family: var(--title-font-family);
-  font-size: 26px;
+  font-size: var(--h2-font-size);
   color: var(--main-color);
-  margin: 0;
   font-weight: 700;
 }
 
@@ -81,7 +79,6 @@
   font-family: var(--title-font-family);
   font-size: 18px;
   color: var(--main-color);
-  margin: 0;
   font-weight: 600;
 }
 
@@ -109,7 +106,6 @@
   line-height: 1.6;
   color: var(--main-color);
   opacity: 0.9;
-  margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
