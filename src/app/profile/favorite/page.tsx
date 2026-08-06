@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { CardPost } from '@/components/CardPost/CardPost';
@@ -7,15 +7,16 @@ import { Modal } from '@/components/Modal/Modal';
 import { PostInfo } from '@/components/PostInfo/PostInfo';
 import styles from '../subpage.module.scss';
 
+const supabase = createClient();
+
 export default function FavoritePage() {
     const { user } = useAuth();
-    const supabase = createClient();
 
     const [recipes, setRecipes] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
 
-    const fetchFavoriteRecipes = async () => {
+    const fetchFavoriteRecipes = useCallback(async () => {
         if (!user) return;
         setLoading(true);
         try {
@@ -46,13 +47,13 @@ export default function FavoritePage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
 
     useEffect(() => {
         fetchFavoriteRecipes();
-    }, [user]);
+    }, [fetchFavoriteRecipes]);
 
-    const handleLikeToggle = async (recipeId: string) => {
+    const handleLikeToggle = useCallback(async (recipeId: string) => {
         if (!user) return;
 
         try {
@@ -67,19 +68,19 @@ export default function FavoritePage() {
         } catch (err) {
             console.error('Ошибка при удалении из избранного:', err);
         }
-    };
+    }, [user]);
 
-    const handleDetailsClick = (recipe: any) => {
+    const handleDetailsClick = useCallback((recipe: any) => {
         setSelectedRecipe(recipe);
         const newUrl = `${window.location.pathname}?recipeId=${recipe.id}`;
         window.history.pushState({ path: newUrl }, '', newUrl);
-    };
+    }, []);
 
-    const handleCloseDetails = () => {
+    const handleCloseDetails = useCallback(() => {
         setSelectedRecipe(null);
         const cleanUrl = window.location.pathname;
         window.history.pushState({ path: cleanUrl }, '', cleanUrl);
-    };
+    }, []);
 
     return (
         <div>
@@ -114,3 +115,4 @@ export default function FavoritePage() {
         </div>
     );
 }
+

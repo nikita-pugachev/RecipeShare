@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { CardPost } from '../CardPost/CardPost';
@@ -12,16 +12,17 @@ interface CardListProps {
     refreshTrigger?: number;
 }
 
+const supabase = createClient();
+
 export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps) => {
     const { user } = useAuth();
-    const supabase = createClient();
     
     const [recipes, setRecipes] = useState<any[]>([]);
     const [likedRecipeIds, setLikedRecipeIds] = useState<Set<string>>(new Set());
     const [loading, setLoading] = useState(true);
     const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
 
-    const fetchRecipes = async () => {
+    const fetchRecipes = useCallback(async () => {
         setLoading(true);
         try {
             const { data, error } = await supabase
@@ -43,7 +44,6 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
                 }
             }
 
-            // Если пользователь авторизован, загружаем его лайки
             if (user) {
                 const { data: likes, error: likesError } = await supabase
                     .from('likes')
@@ -59,14 +59,13 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
 
     useEffect(() => {
         fetchRecipes();
-    }, [user, refreshTrigger]);
+    }, [fetchRecipes, refreshTrigger]);
 
-
-    const handleLikeToggle = async (recipeId: string) => {
+    const handleLikeToggle = useCallback(async (recipeId: string) => {
         if (!user) {
             alert('Войдите в аккаунт, чтобы ставить лайки!');
             return;
@@ -84,8 +83,11 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
 
                 if (error) throw error;
 
-                likedRecipeIds.delete(recipeId);
-                setLikedRecipeIds(new Set(likedRecipeIds));
+                setLikedRecipeIds(prev => {
+                    const next = new Set(prev);
+                    next.delete(recipeId);
+                    return next;
+                });
                 setRecipes(prev => prev.map(r => 
                     r.id === recipeId ? { ...r, likes_count: Math.max(0, r.likes_count - 1) } : r
                 ));
@@ -99,8 +101,11 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
 
                 if (error) throw error;
 
-                likedRecipeIds.add(recipeId);
-                setLikedRecipeIds(new Set(likedRecipeIds));
+                setLikedRecipeIds(prev => {
+                    const next = new Set(prev);
+                    next.add(recipeId);
+                    return next;
+                });
                 setRecipes(prev => prev.map(r => 
                     r.id === recipeId ? { ...r, likes_count: r.likes_count + 1 } : r
                 ));
@@ -108,21 +113,21 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
         } catch (err) {
             console.error('Ошибка при переключении лайка:', err);
         }
-    };
+    }, [user, likedRecipeIds]);
 
-    const handleDetailsClick = (recipe: any) => {
+    const handleDetailsClick = useCallback((recipe: any) => {
         setSelectedRecipe(recipe);
         const newUrl = `${window.location.pathname}?recipeId=${recipe.id}`;
         window.history.pushState({ path: newUrl }, '', newUrl);
-    };
+    }, []);
 
-    const handleCloseDetails = () => {
+    const handleCloseDetails = useCallback(() => {
         setSelectedRecipe(null);
         const cleanUrl = window.location.pathname;
         window.history.pushState({ path: cleanUrl }, '', cleanUrl);
-    };
+    }, []);
 
-    const getSortedRecipes = () => {
+    const sortedRecipes = useMemo(() => {
         if (!searchQuery.trim()) {
             return recipes;
         }
@@ -137,7 +142,7 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
             if (!aMatches && bMatches) return 1;
             return 0;
         });
-    };
+    }, [recipes, searchQuery]);
 
     if (loading) {
         return <div className={styles.loader}>Загрузка рецептов...</div>;
@@ -146,8 +151,6 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
     if (recipes.length === 0) {
         return <div className={styles.empty}>Рецептов пока нет. Будьте первыми, кто поделится!</div>;
     }
-
-    const sortedRecipes = getSortedRecipes();
 
     return (
         <>
@@ -171,3 +174,4 @@ export const CardList = ({ searchQuery = "", refreshTrigger = 0 }: CardListProps
         </>
     );
 };
+

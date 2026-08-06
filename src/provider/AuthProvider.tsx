@@ -1,5 +1,12 @@
 "use client";
-import { createContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  ReactNode,
+} from "react";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 
@@ -24,43 +31,48 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshUser = async () => {
+  const refreshUser = useCallback(async () => {
     const {
       data: { user: freshUser },
     } = await supabase.auth.getUser();
     setUser(freshUser);
-  };
+  }, []);
+
+  const signOut = useCallback(async () => {
+    await supabase.auth.signOut();
+  }, []);
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-      setLoading(false);
-    };
-
-    initializeAuth();
+    let mounted = true;
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event: any, session: any) => {
-      setUser(session?.user || null);
-      setLoading(false);
+    } = supabase.auth.onAuthStateChange((_event: string, session: any) => {
+      if (mounted) {
+        setUser(session?.user || null);
+        setLoading(false);
+      }
+    });
+
+    supabase.auth.getSession().then(({ data }: any) => {
+      if (mounted && loading) {
+        setUser(data?.session?.user || null);
+        setLoading(false);
+      }
     });
 
     return () => {
+      mounted = false;
       subscription.unsubscribe();
     };
   }, []);
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
-  };
+  const contextValue = useMemo(
+    () => ({ user, loading, signOut, refreshUser }),
+    [user, loading, signOut, refreshUser],
+  );
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut, refreshUser }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }

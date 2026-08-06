@@ -1,5 +1,5 @@
 import styles from "./CardPost.module.scss";
-import { FC } from "react";
+import { FC, memo } from "react";
 import Image from "next/image";
 import { Avatar } from "../ui/Avatar/Avatar";
 import { Button } from "../ui/Button/Button";
@@ -27,7 +27,7 @@ interface CardPostProps {
   onDelete?: (id: string) => void;
 }
 
-export const CardPost: FC<CardPostProps> = ({
+export const CardPost: FC<CardPostProps> = memo(({
   recipe,
   isLiked = false,
   onLikeToggle,
@@ -71,7 +71,7 @@ export const CardPost: FC<CardPostProps> = ({
 
       <div className={styles.ingredientsList}>
         {recipe.ingredients?.map((ingredient, index) => (
-          <span key={index} className={styles.ingredientBadge}>
+          <span key={`${ingredient}-${index}`} className={styles.ingredientBadge}>
             {ingredient}
           </span>
         ))}
@@ -101,4 +101,7 @@ export const CardPost: FC<CardPostProps> = ({
       </div>
     </article>
   );
-};
+});
+
+CardPost.displayName = "CardPost";
+

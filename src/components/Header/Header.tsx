@@ -2,10 +2,10 @@
 import styles from "./Header.module.scss";
 import { Button } from "@/components/ui/Button/Button";
 import { Search } from "@/components/ui/Search/Search";
-import { Avatar } from '@/components/ui/Avatar/Avatar';
+import { Avatar } from "@/components/ui/Avatar/Avatar";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LogoIcon from "@/assets/icons/logo_icon.jpg";
@@ -19,36 +19,49 @@ interface HeaderProps {
   onSearchChange?: (value: string) => void;
 }
 
-export const Header = ({ onCreatePost, searchQuery = "", onSearchChange }: HeaderProps) => {
-  const { user, loading, signOut } = useAuth();
+export const Header = ({
+  onCreatePost,
+  searchQuery = "",
+  onSearchChange,
+}: HeaderProps) => {
+  const { user, signOut } = useAuth();
   const router = useRouter();
-  
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     router.push("/login");
-  };
+  }, [router]);
 
-  const handleRegister = () => {
+  const handleRegister = useCallback(() => {
     router.push("/register");
-  };
+  }, [router]);
 
-  const toggleDropdown = (e: React.MouseEvent) => {
+  const toggleDropdown = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    setDropdownOpen(!dropdownOpen);
-  };
+    setDropdownOpen((prev) => !prev);
+  }, []);
+
+  const handleCloseDropdown = useCallback(() => {
+    setDropdownOpen(false);
+  }, []);
 
   useEffect(() => {
     if (!dropdownOpen) return;
-    const handleOutsideClick = () => setDropdownOpen(false);
-    document.addEventListener("click", handleOutsideClick);
-    return () => document.removeEventListener("click", handleOutsideClick);
-  }, [dropdownOpen]);
+    document.addEventListener("click", handleCloseDropdown);
+    return () => document.removeEventListener("click", handleCloseDropdown);
+  }, [dropdownOpen, handleCloseDropdown]);
 
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.logo}>
-        <Image src={LogoIcon} alt="RecipeShare Logo" width={32} height={32} className={styles.logoImage} />
+        <Image
+          src={LogoIcon}
+          alt="RecipeShare Logo"
+          width={32}
+          height={32}
+          className={styles.logoImage}
+        />
         <span className={styles.logoText}>RecipeShare</span>
       </Link>
 
@@ -58,19 +71,19 @@ export const Header = ({ onCreatePost, searchQuery = "", onSearchChange }: Heade
 
       {user ? (
         <div className={styles.profileWrapper}>
-          <button 
-            type="button" 
+          <button
+            type="button"
             className={styles.userBadge}
             onClick={toggleDropdown}
           >
-            <Avatar src={user.user_metadata?.avatar_url} size="sm"/>
+            <Avatar src={user.user_metadata?.avatar_url} size="sm" />
             <span className={styles.username}>{user.user_metadata?.name}</span>
           </button>
 
           {dropdownOpen && (
             <div className={styles.dropdownMenu}>
-              <Link 
-                href="/profile" 
+              <Link
+                href="/profile"
                 className={styles.dropdownItem}
                 onClick={() => setDropdownOpen(false)}
               >
@@ -78,8 +91,8 @@ export const Header = ({ onCreatePost, searchQuery = "", onSearchChange }: Heade
                 <Image src={UserIcon} alt="Кабинет" width={18} height={18} />
               </Link>
 
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className={styles.dropdownItem}
                 onClick={(e) => {
                   setDropdownOpen(false);
@@ -87,11 +100,17 @@ export const Header = ({ onCreatePost, searchQuery = "", onSearchChange }: Heade
                 }}
               >
                 <span>Поделиться рецептом</span>
-                <Image src={AddIcon} alt="Добавить" width={18} height={18} className={styles.plusIcon} />
+                <Image
+                  src={AddIcon}
+                  alt="Добавить"
+                  width={18}
+                  height={18}
+                  className={styles.plusIcon}
+                />
               </button>
-              
-              <button 
-                type="button" 
+
+              <button
+                type="button"
                 className={`${styles.dropdownItem} ${styles.logoutItem}`}
                 onClick={() => {
                   setDropdownOpen(false);
@@ -99,7 +118,13 @@ export const Header = ({ onCreatePost, searchQuery = "", onSearchChange }: Heade
                 }}
               >
                 <span>Выйти</span>
-                <Image src={LogoutIcon} alt="Выйти" width={18} height={18} className={styles.logoutIcon} />
+                <Image
+                  src={LogoutIcon}
+                  alt="Выйти"
+                  width={18}
+                  height={18}
+                  className={styles.logoutIcon}
+                />
               </button>
             </div>
           )}

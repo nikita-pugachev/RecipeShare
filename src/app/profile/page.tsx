@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/utils/supabase/client";
 import { Input } from "@/components/ui/Input/Input";
@@ -13,6 +13,14 @@ export default function ProfilePage() {
 
   const [name, setName] = useState(user?.user_metadata?.name || "");
   const [email, setEmail] = useState(user?.email || "");
+
+  useEffect(() => {
+    if (user) {
+      if (user.user_metadata?.name) setName(user.user_metadata.name);
+      if (user.email) setEmail(user.email);
+    }
+  }, [user]);
+
   const [password, setPassword] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [fileInputKey, setFileInputKey] = useState(0);

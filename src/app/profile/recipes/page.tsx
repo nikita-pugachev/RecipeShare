@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { CardPost } from '@/components/CardPost/CardPost';
@@ -8,9 +8,10 @@ import { PostInfo } from '@/components/PostInfo/PostInfo';
 import { Button } from '@/components/ui/Button/Button';
 import styles from '../subpage.module.scss';
 
+const supabase = createClient();
+
 export default function RecipesPage() {
     const { user } = useAuth();
-    const supabase = createClient();
 
     const [recipes, setRecipes] = useState<any[]>([]);
     const [likedRecipeIds, setLikedRecipeIds] = useState<Set<string>>(new Set());
@@ -20,7 +21,7 @@ export default function RecipesPage() {
     const [recipeToDeleteId, setRecipeToDeleteId] = useState<string | null>(null);
     const [deleting, setDeleting] = useState(false);
 
-    const fetchMyRecipes = async () => {
+    const fetchMyRecipes = useCallback(async () => {
         if (!user) return;
         setLoading(true);
         try {
@@ -46,13 +47,13 @@ export default function RecipesPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
 
     useEffect(() => {
         fetchMyRecipes();
-    }, [user]);
+    }, [fetchMyRecipes]);
 
-    const handleLikeToggle = async (recipeId: string) => {
+    const handleLikeToggle = useCallback(async (recipeId: string) => {
         if (!user) return;
 
         const isAlreadyLiked = likedRecipeIds.has(recipeId);
@@ -67,8 +68,11 @@ export default function RecipesPage() {
 
                 if (error) throw error;
 
-                likedRecipeIds.delete(recipeId);
-                setLikedRecipeIds(new Set(likedRecipeIds));
+                setLikedRecipeIds(prev => {
+                    const next = new Set(prev);
+                    next.delete(recipeId);
+                    return next;
+                });
                 setRecipes(prev => prev.map(recipe => 
                     recipe.id === recipeId ? { ...recipe, likes_count: Math.max(0, recipe.likes_count - 1) } : recipe
                 ));
@@ -82,8 +86,11 @@ export default function RecipesPage() {
 
                 if (error) throw error;
 
-                likedRecipeIds.add(recipeId);
-                setLikedRecipeIds(new Set(likedRecipeIds));
+                setLikedRecipeIds(prev => {
+                    const next = new Set(prev);
+                    next.add(recipeId);
+                    return next;
+                });
                 setRecipes(prev => prev.map(recipe => 
                     recipe.id === recipeId ? { ...recipe, likes_count: recipe.likes_count + 1 } : recipe
                 ));
@@ -91,9 +98,9 @@ export default function RecipesPage() {
         } catch (err) {
             console.error('Ошибка при переключении лайка:', err);
         }
-    };
+    }, [user, likedRecipeIds]);
 
-    const executeDelete = async () => {
+    const executeDelete = useCallback(async () => {
         if (!recipeToDeleteId || !user) return;
         setDeleting(true);
 
@@ -130,19 +137,27 @@ export default function RecipesPage() {
         } finally {
             setDeleting(false);
         }
-    };
+    }, [recipeToDeleteId, user, recipes]);
 
-    const handleDetailsClick = (recipe: any) => {
+    const handleDetailsClick = useCallback((recipe: any) => {
         setSelectedRecipe(recipe);
         const newUrl = `${window.location.pathname}?recipeId=${recipe.id}`;
         window.history.pushState({ path: newUrl }, '', newUrl);
-    };
+    }, []);
 
-    const handleCloseDetails = () => {
+    const handleCloseDetails = useCallback(() => {
         setSelectedRecipe(null);
         const cleanUrl = window.location.pathname;
         window.history.pushState({ path: cleanUrl }, '', cleanUrl);
-    };
+    }, []);
+
+    const handleSetRecipeToDelete = useCallback((id: string) => {
+        setRecipeToDeleteId(id);
+    }, []);
+
+    const handleCancelDelete = useCallback(() => {
+        setRecipeToDeleteId(null);
+    }, []);
 
     return (
         <div>
@@ -164,7 +179,7 @@ export default function RecipesPage() {
                             isLiked={likedRecipeIds.has(recipe.id)}
                             onLikeToggle={handleLikeToggle}
                             onDetailsClick={handleDetailsClick}
-                            onDelete={(id) => setRecipeToDeleteId(id)}
+                            onDelete={handleSetRecipeToDelete}
                         />
                     ))}
                 </div>
@@ -176,14 +191,14 @@ export default function RecipesPage() {
                 )}
             </Modal>
 
-            <Modal isOpen={!!recipeToDeleteId} onClose={() => setRecipeToDeleteId(null)} size="sm">
+            <Modal isOpen={!!recipeToDeleteId} onClose={handleCancelDelete} size="sm">
                 <div className={styles.confirmModalContent}>
                     <h2 className={styles.confirmTitle}>Удаление рецепта</h2>
                     <p className={styles.confirmText}>
                         Вы действительно хотите удалить этот рецепт? Это действие нельзя отменить.
                     </p>
                     <div className={styles.confirmButtons}>
-                        <Button variant="secondary" onClick={() => setRecipeToDeleteId(null)} disabled={deleting}>
+                        <Button variant="secondary" onClick={handleCancelDelete} disabled={deleting}>
                             Отмена
                         </Button>
                         <Button variant="main" onClick={executeDelete} disabled={deleting}>
@@ -195,3 +210,4 @@ export default function RecipesPage() {
         </div>
     );
 }
+
